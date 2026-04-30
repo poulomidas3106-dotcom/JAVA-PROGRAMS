@@ -1,0 +1,73 @@
+import java.util.*;
+
+interface Department {
+    String deptName = "CSE";
+    String deptHead = "DrSen";
+    void printDeptData();
+}
+
+class Hostel {
+    String hostelName, hostelLocation;
+    int numberOfRooms;
+
+    void getHostelData(Scanner sc) {
+        hostelName = sc.next();
+        hostelLocation = sc.next();
+        numberOfRooms = sc.nextInt();
+    }
+
+    void printHostelData() {
+        System.out.println(hostelName + " " + hostelLocation + " " + numberOfRooms);
+    }
+}
+
+class Student extends Hostel implements Department {
+    String studentName, regdNo, electiveSubject;
+    double avgMarks;
+
+    void getData(Scanner sc) {
+        studentName = sc.next();
+        regdNo = sc.next();
+        electiveSubject = sc.next();
+        avgMarks = sc.nextDouble();
+        getHostelData(sc);
+    }
+
+    void printData() {
+        System.out.println(studentName + " " + regdNo + " " + electiveSubject + " " + avgMarks);
+        printHostelData();
+        printDeptData();
+    }
+
+    public void printDeptData() {
+        System.out.println(deptName + " " + deptHead);
+    }
+}
+
+public class StudentManagementSystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Student> list = new ArrayList<>();
+
+        while (true) {
+            int ch = sc.nextInt();
+            switch (ch) {
+                case 1:
+                    Student s = new Student();
+                    s.getData(sc);
+                    list.add(s);
+                    break;
+                case 2:
+                    String reg = sc.next();
+                    list.removeIf(st -> st.regdNo.equals(reg));
+                    break;
+                case 3:
+                    for (Student st : list)
+                        st.printData();
+                    break;
+                case 4:
+                    return;
+            }
+        }
+    }
+}
